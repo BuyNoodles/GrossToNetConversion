@@ -1,4 +1,6 @@
+using API.Data;
 using API.Extensions;
+using API.Interfaces;
 using API.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +14,8 @@ services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
+
+services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
 services.AddDbContext<GrossToNetContext>(
     dbContextOptions => dbContextOptions

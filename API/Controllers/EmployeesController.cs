@@ -1,38 +1,38 @@
 ﻿using API.Entities;
-using API.Models;
+using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
     public class EmployeesController : BaseApiController
     {
-        private readonly GrossToNetContext _context;
+        private readonly IEmployeeRepository _employeeRepository;
 
-        public EmployeesController(GrossToNetContext context)
+        public EmployeesController(IEmployeeRepository employeeRepository)
         {
-            _context = context;
+            _employeeRepository = employeeRepository;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<Employee>>> GetEmployees()
         {
-            return Ok(await _context.Employees.ToListAsync());
+            return Ok(await _employeeRepository.GetAllEmployeesAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Employee>> GetEmployee(int id)
         {
-            return Ok(await _context.Employees.FindAsync(id));
+            return Ok(await _employeeRepository.GetEmployeeByIdAsync(id));
         }
 
         [HttpPost("add")]
-        public async Task<ActionResult<Employee>> AddEmployee([FromBody] Employee employee)
+        public async Task<ActionResult> AddEmployee([FromBody] Employee employee)
         {
-            _context.Employees.Add(employee);
-            await _context.SaveChangesAsync();
+            var result = await _employeeRepository.AddEmployeeAsync(employee);
 
-            return employee;
+            if (result) return Ok();
+
+            return BadRequest("Failed to add employee");
         }
     }
 }
