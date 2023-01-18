@@ -13,11 +13,9 @@ services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
-var serverVersion = new MySqlServerVersion(new Version(8, 0, 31));
-
 services.AddDbContext<GrossToNetContext>(
     dbContextOptions => dbContextOptions
-        .UseMySql(config["MySql:ConnectionString"], serverVersion)
+        .UseSqlServer(config["ConnectionStrings:MSSQL"])
 );
 
 var app = builder.Build();
