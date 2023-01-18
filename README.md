@@ -6,7 +6,7 @@ Postman collection json file is available `GrossToNetConversion.postman_collecti
 
 ## Configuration
 
-Change MySql connection string if running in production in `appsettings.json`.
+Change MSSQL connection string if running in production in `appsettings.json`.
 
 ### Local API addresses are:
 
