@@ -1,0 +1,101 @@
+{
+	"info": {
+		"_postman_id": "1313f292-226e-4b87-92f7-bcb14a85a77c",
+		"name": "GrossToNetConversion",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Employees",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/api/employees",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Employee by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/api/employees/5",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"employees",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Employee",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"FirstName\": \"Test1\",\r\n    \"LastName\": \"TestLastName\",\r\n    \"Address\": \"Test address\",\r\n    \"GrossIncome\": 35400.00,\r\n    \"WorkPosition\": \"Testing Position\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{apiUrl}}/api/employees/add",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"employees",
+						"add"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "apiUrl",
+			"value": "http://localhost:5000",
+			"type": "default"
+		}
+	]
+}
