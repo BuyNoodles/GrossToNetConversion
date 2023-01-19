@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using API.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Models;
+namespace API.Data;
 
 public partial class GrossToNetContext : DbContext
 {
@@ -17,6 +17,7 @@ public partial class GrossToNetContext : DbContext
     }
 
     public virtual DbSet<Employee> Employees { get; set; }
+    public virtual DbSet<IncomeDetails> IncomeDetails { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

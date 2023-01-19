@@ -17,4 +17,5 @@ public partial class Employee
     public decimal GrossIncome { get; set; }
     [Required]
     public string WorkPosition { get; set; }
+    public IncomeDetails IncomeDetails { get; set; }
 }

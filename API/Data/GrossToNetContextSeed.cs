@@ -1,7 +1,7 @@
 ﻿using API.Entities;
 using System.Text.Json;
 
-namespace API.Models
+namespace API.Data
 {
     public class GrossToNetContextSeed
     {
@@ -19,6 +19,26 @@ namespace API.Models
                     foreach (var item in employees)
                     {
                         context.Employees.Add(item);
+                    }
+
+                    await context.SaveChangesAsync();
+
+                    foreach (var item in employees)
+                    {
+                        var Tax = 0.1m * item.GrossIncome;
+                        var PIO = 0.14m * item.GrossIncome;
+                        var HealthCare = 0.0515m * item.GrossIncome;
+                        var Unemployment = 0.0075m * item.GrossIncome;
+
+                        context.IncomeDetails.Add(new IncomeDetails
+                        {
+                            EmployeeId = item.Id,
+                            Tax = Tax,
+                            PIO = PIO,
+                            HealthCare = HealthCare,
+                            Unemployment = Unemployment,
+                            NetIncome = item.GrossIncome - Tax - PIO - HealthCare - Unemployment
+                        });
                     }
 
                     await context.SaveChangesAsync();

@@ -38,18 +38,18 @@ namespace API.Controllers
         [HttpGet("export/excel")]
         public async Task<ActionResult> ExportToExcel()
         {
-            await _employeeRepository.ExportToExcel();
+            await _employeeRepository.ExportToExcelAsync();
 
             return PhysicalFile(
                 Path.Combine(Directory.GetCurrentDirectory(), "Content/Files/Employees.xlsx"), 
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 "Employees.xlsx");
         }
-
+        
         [HttpGet("export/csv")]
         public async Task<ActionResult> ExportToCsv()
         {
-            await _employeeRepository.ExportToCsv();
+            await _employeeRepository.ExportToCsvAsync();
 
             return PhysicalFile(
                 Path.Combine(Directory.GetCurrentDirectory(), "Content/Files/Employees.csv"),
