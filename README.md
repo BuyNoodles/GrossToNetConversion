@@ -17,6 +17,6 @@ Change MSSQL connection string if running in production in `appsettings.json`.
 
 * [GET] all employees `/api/employees`
 * [GET] employee by id `/api/employees/5`
-* [GET] Add employee `/api/employees/export/excel`
-* [GET] Add employee `/api/employees/export/csv`
+* [GET] Export to xlsx `/api/employees/export/excel`
+* [GET] Export to CSV `/api/employees/export/csv`
 * [POST] Add employee `/api/employees/add`
