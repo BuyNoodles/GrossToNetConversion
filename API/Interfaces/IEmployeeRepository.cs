@@ -8,5 +8,7 @@ namespace API.Interfaces
         Task<List<Employee>> GetAllEmployeesAsync();
         Task<Employee> GetEmployeeByIdAsync(int id);
         Task<bool> AddEmployeeAsync(Employee employee);
+        Task<bool> ExportToExcel();
+        Task<bool> ExportToCsv();
     }
 }

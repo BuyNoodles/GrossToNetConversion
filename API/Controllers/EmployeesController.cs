@@ -34,5 +34,27 @@ namespace API.Controllers
 
             return BadRequest("Failed to add employee");
         }
+
+        [HttpGet("export/excel")]
+        public async Task<ActionResult> ExportToExcel()
+        {
+            await _employeeRepository.ExportToExcel();
+
+            return PhysicalFile(
+                Path.Combine(Directory.GetCurrentDirectory(), "Content/Files/Employees.xlsx"), 
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "Employees.xlsx");
+        }
+
+        [HttpGet("export/csv")]
+        public async Task<ActionResult> ExportToCsv()
+        {
+            await _employeeRepository.ExportToCsv();
+
+            return PhysicalFile(
+                Path.Combine(Directory.GetCurrentDirectory(), "Content/Files/Employees.csv"),
+                "text/csv",
+                "Employees.csv");
+        }
     }
 }

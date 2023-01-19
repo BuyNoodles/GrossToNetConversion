@@ -3,6 +3,7 @@ using API.Extensions;
 using API.Interfaces;
 using API.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;

@@ -49,7 +49,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"FirstName\": \"Test1\",\r\n    \"LastName\": \"TestLastName\",\r\n    \"Address\": \"Test address\",\r\n    \"GrossIncome\": 35400.00,\r\n    \"WorkPosition\": \"Testing Position\"\r\n}",
+					"raw": "{\r\n    \"FirstName\": \"TestFirstName 2\",\r\n    \"LastName\": \"TestLastName 2\",\r\n    \"Address\": \"Test address 2\",\r\n    \"GrossIncome\": 80000.00,\r\n    \"WorkPosition\": \"Testing Position 2\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -65,6 +65,46 @@
 						"api",
 						"employees",
 						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Export to Exel (xlsx)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/api/employees/export/excel",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"employees",
+						"export",
+						"excel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Export to CSV",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/api/employees/export/csv",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"employees",
+						"export",
+						"csv"
 					]
 				}
 			},
