@@ -1,0 +1,72 @@
+[
+  {
+    "FirstName": "Lynnett",
+    "LastName": "Leggin",
+    "Address": "705 Springs Crossing",
+    "GrossIncome": 77729.68,
+    "WorkPosition": "Environmental Tech"
+  },
+  {
+    "FirstName": "Herta",
+    "LastName": "Eite",
+    "Address": "49617 Esker Crossing",
+    "GrossIncome": 71069.87,
+    "WorkPosition": "Electrical Engineer"
+  },
+  {
+    "FirstName": "Colas",
+    "LastName": "Jirasek",
+    "Address": "94121 Mendota Road",
+    "GrossIncome": 32254.37,
+    "WorkPosition": "Mechanical Systems Engineer"
+  },
+  {
+    "FirstName": "Anatollo",
+    "LastName": "Ashpital",
+    "Address": "32 Ludington Lane",
+    "GrossIncome": 33785.57,
+    "WorkPosition": "Health Coach IV"
+  },
+  {
+    "FirstName": "Dick",
+    "LastName": "Josiah",
+    "Address": "8 Di Loreto Circle",
+    "GrossIncome": 60248.5,
+    "WorkPosition": "Recruiting Manager"
+  },
+  {
+    "FirstName": "Lavena",
+    "LastName": "Smiths",
+    "Address": "08 Debs Terrace",
+    "GrossIncome": 30839.04,
+    "WorkPosition": "Account Representative I"
+  },
+  {
+    "FirstName": "Gabriello",
+    "LastName": "Billin",
+    "Address": "905 Leroy Way",
+    "GrossIncome": 53708.37,
+    "WorkPosition": "Staff Scientist"
+  },
+  {
+    "FirstName": "Tim",
+    "LastName": "Slyme",
+    "Address": "731 Kensington Center",
+    "GrossIncome": 78333.29,
+    "WorkPosition": "Database Administrator I"
+  },
+  {
+    "FirstName": "Ennis",
+    "LastName": "McKyrrelly",
+    "Address": "3 Becker Lane",
+    "GrossIncome": 38670.08,
+    "WorkPosition": "Internal Auditor"
+  },
+  {
+    "FirstName": "Carmella",
+    "LastName": "Antoshin",
+    "Address": "32 Pennsylvania Plaza",
+    "GrossIncome": 58821.65,
+    "WorkPosition": "Nurse"
+  }
+]
