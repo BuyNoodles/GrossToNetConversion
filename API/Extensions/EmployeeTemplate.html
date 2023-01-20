@@ -1,0 +1,37 @@
+<style>
+    table, td {
+        border: 1px solid black;
+        padding: 2px;
+    }
+</style>
+<body>
+    <h1>{employee.FirstName} {employee.LastName}</h1>
+    <h3>{employee.Address}</h3>
+    <h3>{employee.WorkPosition}</h3>
+    <table>
+        <tr>
+            <td>Gross Income</td>
+            <td>{employee.GrossIncome}</td>
+        </tr>
+        <tr>
+            <td>Tax</td>
+            <td>{employee.IncomeDetails.Tax}</td>
+        </tr>
+        <tr>
+            <td>Pension (PIO)</td>
+            <td>{employee.IncomeDetails.PIO}</td>
+        </tr>
+        <tr>
+            <td>Health care</td>
+            <td>{employee.IncomeDetails.HealthCare}</td>
+        </tr>
+        <tr>
+            <td>Unemployment</td>
+            <td>{employee.IncomeDetails.Unemployment}</td>
+        </tr>
+        <tr>
+            <td>Net Income</td>
+            <td>{employee.IncomeDetails.NetIncome}</td>
+        </tr>
+    </table>
+</body>

@@ -12,6 +12,7 @@ namespace API.Interfaces
         Task<bool> DeleteEmployeeAsync(int id);
         Task<bool> ExportToExcelAsync();
         Task<bool> ExportToCsvAsync();
+        Task<bool> ExportToPdfAsync(int id);
         Task<decimal> Convert(decimal amount, string from, string to);
         IncomeDetails CalculateIncome(decimal grossIncome);
     }

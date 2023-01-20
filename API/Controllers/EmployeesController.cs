@@ -67,5 +67,16 @@ namespace API.Controllers
                 "text/csv",
                 "Employees.csv");
         }
+
+        [HttpGet("export/pdf/{id}")]
+        public async Task<ActionResult> ExportToPdf(int id)
+        {
+            await _employeeRepository.ExportToPdfAsync(id);
+
+            return PhysicalFile(
+                Path.Combine(Directory.GetCurrentDirectory(), "Content/Files/Employee.pdf"),
+                "application/pdf",
+                "Employee.pdf");
+        }
     }
 }

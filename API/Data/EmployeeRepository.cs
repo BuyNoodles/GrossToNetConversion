@@ -1,10 +1,14 @@
 ﻿using API.Dtos;
 using API.Entities;
+using API.Extensions;
 using API.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
+using PdfSharp.Pdf;
+using PdfSharp;
 using System.Text;
 using System.Text.Json;
+using TheArtOfDev.HtmlRenderer.PdfSharp;
 
 namespace API.Data
 {
@@ -128,6 +132,18 @@ namespace API.Data
             return true;
         }
 
+        public async Task<bool> ExportToPdfAsync(int id)
+        {
+            var employee = await GetEmployeeByIdAsync(id);
+
+            var html = HtmlFormat.Format(employee);
+
+            PdfDocument pdf = PdfGenerator.GeneratePdf(html, PageSize.A4);
+            pdf.Save("Content/Files/Employee.pdf");
+
+            return true;
+        }
+
         public async Task<decimal> Convert(decimal amount, string from, string to)
         {
             HttpClient client = new HttpClient();
@@ -144,7 +160,6 @@ namespace API.Data
             string content = await response.Content.ReadAsStringAsync();
 
             _logger.LogInformation(content);
-            _logger.LogInformation($"{amount}");
 
             ConversionResult result = JsonSerializer.Deserialize<ConversionResult>(content);
 
@@ -153,6 +168,7 @@ namespace API.Data
 
         public IncomeDetails CalculateIncome(decimal grossIncome)
         {
+            // Calculate Net income from Gross income
             var tax = 0.1m * grossIncome;
             var pio = 0.14m * grossIncome;
             var healthCare = 0.0515m * grossIncome;

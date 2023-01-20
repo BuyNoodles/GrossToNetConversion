@@ -22,3 +22,4 @@ Make an account on https://apilayer.com/marketplace/exchangerates_data-api and s
 * [DELETE] Delete employee `/api/employees/delete/5`
 * [GET] Export to xlsx `/api/employees/export/excel`
 * [GET] Export to CSV `/api/employees/export/csv`
+* [GET] Export detailed employee data to PDF `/api/employees/export/pdf/5`

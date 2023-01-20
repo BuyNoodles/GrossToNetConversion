@@ -43,6 +43,31 @@
 			"response": []
 		},
 		{
+			"name": "Get Employee by Id in EUR",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/api/employees/5?currency=eur",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"employees",
+						"5"
+					],
+					"query": [
+						{
+							"key": "currency",
+							"value": "eur"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Create Employee",
 			"request": {
 				"method": "POST",
@@ -65,6 +90,26 @@
 						"api",
 						"employees",
 						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Employee by Id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/api/employees/delete/11",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"employees",
+						"delete",
+						"11"
 					]
 				}
 			},
@@ -107,6 +152,14 @@
 						"csv"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Export to PDF",
+			"request": {
+				"method": "GET",
+				"header": []
 			},
 			"response": []
 		}
