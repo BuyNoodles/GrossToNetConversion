@@ -7,7 +7,7 @@ Postman collection json file is available `GrossToNetConversion.postman_collecti
 ## Configuration
 
 Change MSSQL connection string if running in production in `appsettings.json`.
-Make an account on https://apilayer.com/marketplace/exchangerates_data-api and set your API key inside appsettings.json
+Make an account on https://apilayer.com/marketplace/exchangerates_data-api and set your API key inside `appsettings.json`
 
 ### Local API addresses are:
 

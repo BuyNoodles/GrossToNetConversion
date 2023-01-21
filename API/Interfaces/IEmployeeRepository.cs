@@ -7,8 +7,8 @@ namespace API.Interfaces
     public interface IEmployeeRepository
     {
         Task<List<EmployeeDto>> GetAllEmployeesAsync();
-        Task<Employee> GetEmployeeByIdAsync(int id, string currency);
-        Task<bool> AddEmployeeAsync(Employee employee);
+        Task<DetailedEmployeeDto> GetEmployeeByIdAsync(int id, string currency);
+        Task<Employee> AddEmployeeAsync(Employee employee);
         Task<bool> DeleteEmployeeAsync(int id);
         Task<bool> ExportToExcelAsync();
         Task<bool> ExportToCsvAsync();

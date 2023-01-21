@@ -9,6 +9,7 @@ using PdfSharp;
 using System.Text;
 using System.Text.Json;
 using TheArtOfDev.HtmlRenderer.PdfSharp;
+using AutoMapper;
 
 namespace API.Data
 {
@@ -17,22 +18,22 @@ namespace API.Data
         private readonly GrossToNetContext _context;
         private readonly IConfiguration _config;
         private readonly ILogger<EmployeeRepository> _logger;
+        private readonly IMapper _mapper;
 
         public EmployeeRepository(GrossToNetContext context, IConfiguration config, 
-            ILogger<EmployeeRepository> logger)
+            ILogger<EmployeeRepository> logger, IMapper mapper)
         {
             _context = context;
             _config = config;
             _logger = logger;
+            _mapper = mapper;
         }
 
-        public async Task<bool> AddEmployeeAsync(Employee employee)
+        public async Task<Employee> AddEmployeeAsync(Employee employee)
         {
-            var newEmployee = _context.Employees.Add(employee);
+            _context.Employees.Add(employee);
 
-            var employeeResult = await _context.SaveChangesAsync();
-
-            if(employeeResult < 0) return false;
+            await _context.SaveChangesAsync();
 
             // Calculate Tax, PIO.. from gross income
             IncomeDetails details = CalculateIncome(employee.GrossIncome);
@@ -41,14 +42,16 @@ namespace API.Data
 
             _context.IncomeDetails.Add(details);
 
-            var detailsResult = await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-            return detailsResult > 0;
+            return employee;
         }
 
         public async Task<bool> DeleteEmployeeAsync(int id)
         {
             var employee = await _context.Employees.FindAsync(id);
+
+            if (employee == null) return false;
 
             _context.Remove(employee);
 
@@ -59,33 +62,29 @@ namespace API.Data
 
         public async Task<List<EmployeeDto>> GetAllEmployeesAsync()
         {
-            return await _context.Employees
+            var employees = await _context.Employees
                 .Include(p => p.IncomeDetails)
-                .Select(x => new EmployeeDto
-                {
-                    Id = x.Id,
-                    FirstName = x.FirstName,
-                    LastName = x.LastName,
-                    Address = x.Address,
-                    GrossIncome = x.GrossIncome,
-                    WorkPosition = x.WorkPosition
-                })
                 .ToListAsync();
+
+            return _mapper.Map<List<EmployeeDto>>(employees);
         }
 
-        public async Task<Employee> GetEmployeeByIdAsync(int id, string currency = "RSD")
+        public async Task<DetailedEmployeeDto> GetEmployeeByIdAsync(int id, string currency = "rsd")
         {
-            var employee = await _context.Employees
+            var query = await _context.Employees
                 .Include(p => p.IncomeDetails)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
+            var employee = _mapper.Map<Employee, DetailedEmployeeDto>(query);
+
             // Convert to EUR or USD using public API
-            if(currency.ToLower() == "eur" || currency.ToLower() == "usd")
+            if(employee != null && currency != "rsd")
             {
                 var convertedGross = await Convert(employee.GrossIncome, "RSD", currency.ToUpper());
 
                 var newIncome = CalculateIncome(convertedGross);
 
+                employee.GrossIncome = convertedGross;
                 employee.IncomeDetails.Tax = newIncome.Tax;
                 employee.IncomeDetails.PIO = newIncome.PIO;
                 employee.IncomeDetails.HealthCare = newIncome.HealthCare;
@@ -95,12 +94,13 @@ namespace API.Data
             }
 
             return employee;
-
         }
 
         public async Task<bool> ExportToExcelAsync()
         {
             var employees = await GetAllEmployeesAsync();
+
+            if (!employees.Any()) return false;
 
             ExcelPackage excel = new ExcelPackage();
 
@@ -116,6 +116,8 @@ namespace API.Data
         public async Task<bool> ExportToCsvAsync()
         {
             var employees = await GetAllEmployeesAsync();
+
+            if (!employees.Any()) return false;
 
             var sb = new StringBuilder();
 
@@ -135,6 +137,8 @@ namespace API.Data
         public async Task<bool> ExportToPdfAsync(int id)
         {
             var employee = await GetEmployeeByIdAsync(id);
+
+            if (employee == null) return false;
 
             var html = HtmlFormat.Format(employee);
 
@@ -159,7 +163,7 @@ namespace API.Data
             var response = await client.SendAsync(message);
             string content = await response.Content.ReadAsStringAsync();
 
-            _logger.LogInformation(content);
+            // _logger.LogInformation(content);
 
             ConversionResult result = JsonSerializer.Deserialize<ConversionResult>(content);
 

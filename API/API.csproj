@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="EPPlus" Version="6.1.1" />
     <PackageReference Include="HtmlRenderer.PdfSharp.NetStandard2" Version="1.5.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
