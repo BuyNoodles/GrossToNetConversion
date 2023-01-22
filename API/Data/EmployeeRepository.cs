@@ -1,15 +1,15 @@
 ﻿using API.Dtos;
 using API.Entities;
-using API.Extensions;
 using API.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
-using PdfSharp.Pdf;
-using PdfSharp;
 using System.Text;
 using System.Text.Json;
-using TheArtOfDev.HtmlRenderer.PdfSharp;
 using AutoMapper;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace API.Data
 {
@@ -80,7 +80,7 @@ namespace API.Data
             // Convert to EUR or USD using public API
             if(employee != null && currency != "rsd")
             {
-                var convertedGross = await Convert(employee.GrossIncome, "RSD", currency.ToUpper());
+                var convertedGross = await ConvertCurrency(employee.GrossIncome, "RSD", currency.ToUpper());
 
                 var newIncome = CalculateIncome(convertedGross);
 
@@ -121,12 +121,12 @@ namespace API.Data
 
             var sb = new StringBuilder();
 
-            sb.AppendLine("Id;FirstName;LastName;Address;GrossIncome;WorkPosition");
+            sb.AppendLine("Id;FirstName;LastName;Address;Email;GrossIncome;WorkPosition");
 
             foreach(var employee in employees)
             {
                 sb.AppendLine($"{employee.Id};{employee.FirstName};{employee.LastName};" +
-                    $"{employee.Address};{employee.GrossIncome};{employee.WorkPosition}");
+                    $"{employee.Address};{employee.Email};{employee.GrossIncome};{employee.WorkPosition}");
             }
 
             await File.WriteAllTextAsync("Content/Files/Employees.csv", sb.ToString());
@@ -134,21 +134,71 @@ namespace API.Data
             return true;
         }
 
-        public async Task<bool> ExportToPdfAsync(int id)
+        public bool ExportToPdf(DetailedEmployeeDto employee)
         {
-            var employee = await GetEmployeeByIdAsync(id);
+            var pdf = new Document(iTextSharp.text.PageSize.A4);
+            var midFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.TIMES_ROMAN, 20);
+            var smallFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.TIMES_ROMAN, 17);
+            
+            PdfWriter.GetInstance(pdf, 
+                new FileStream($"Content/Files/{employee.FirstName}{employee.LastName}_Employee.pdf", 
+                FileMode.Create));           
+            pdf.Open();
 
-            if (employee == null) return false;
+            pdf.Add(new Paragraph($"{employee.FirstName} {employee.LastName}", midFont));
+            pdf.Add(new Paragraph($"{employee.Address}", smallFont));
+            pdf.Add(new Paragraph($"{employee.Email}", smallFont));
+            pdf.Add(new Paragraph($"{employee.WorkPosition}", smallFont));
 
-            var html = HtmlFormat.Format(employee);
+            var table = new PdfPTable(2);
+            table.SpacingBefore = 20f;
 
-            PdfDocument pdf = PdfGenerator.GeneratePdf(html, PageSize.A4);
-            pdf.Save("Content/Files/Employee.pdf");
+            table.AddCell("Gross Income");
+            table.AddCell($"{employee.GrossIncome}");
+            table.AddCell("Tax");
+            table.AddCell($"{employee.IncomeDetails.Tax}");
+            table.AddCell("Pension/PIO");
+            table.AddCell($"{employee.IncomeDetails.PIO}");
+            table.AddCell("Health Care");
+            table.AddCell($"{employee.IncomeDetails.HealthCare}");
+            table.AddCell("Unemployment");
+            table.AddCell($"{employee.IncomeDetails.Unemployment}");
+            table.AddCell("Net Income");
+            table.AddCell($"{employee.IncomeDetails.NetIncome}");
+
+            pdf.Add(table);
+
+            pdf.Close();
 
             return true;
         }
 
-        public async Task<decimal> Convert(decimal amount, string from, string to)
+        public async Task<bool> SendPdfToEmail(DetailedEmployeeDto employee)
+        {
+            string apiKey = _config["ApiCredentials:SendGrid:ApiKey"];
+            string senderEmail = _config["ApiCredentials:SendGrid:SenderEmail"];
+
+            var client = new SendGridClient(apiKey);
+
+            var from = new EmailAddress(senderEmail, "GrossToNetConversion");
+            var to = new EmailAddress(employee.Email, $"{employee.FirstName} {employee.LastName}");
+            var msg = MailHelper.CreateSingleEmail(from, to, "Forwarded PDF Document", 
+                "Hello,\n\nYou'll find the attached PDF file below.\n\nGrossToNetConversion",
+                "Hello,<br><br>You'll find the attached PDF file below.<br><br>Warm Regards<br>GrossToNetConversion");
+
+            var file = File.ReadAllBytes($"Content/Files/{employee.FirstName}{employee.LastName}_Employee.pdf");
+
+            msg.AddAttachment("employee_report.pdf", Convert.ToBase64String(file));
+            var response = await client.SendEmailAsync(msg);
+
+            // _logger.LogInformation(await response.Body.ReadAsStringAsync());
+
+            if (!response.IsSuccessStatusCode) return false;
+
+            return true;
+        }
+
+        public async Task<decimal> ConvertCurrency(decimal amount, string from, string to)
         {
             HttpClient client = new HttpClient();
 

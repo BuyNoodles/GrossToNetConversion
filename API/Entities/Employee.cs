@@ -14,6 +14,8 @@ public partial class Employee
     [Required]
     public string Address { get; set; }
     [Required]
+    public string Email { get; set; }
+    [Required]
     public decimal GrossIncome { get; set; }
     [Required]
     public string WorkPosition { get; set; }

@@ -29,14 +29,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{apiUrl}}/api/employees/5",
+					"raw": "{{apiUrl}}/api/employees/1",
 					"host": [
 						"{{apiUrl}}"
 					],
 					"path": [
 						"api",
 						"employees",
-						"5"
+						"1"
 					]
 				}
 			},
@@ -48,14 +48,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{apiUrl}}/api/employees/5?currency=eur",
+					"raw": "{{apiUrl}}/api/employees/1?currency=eur",
 					"host": [
 						"{{apiUrl}}"
 					],
 					"path": [
 						"api",
 						"employees",
-						"5"
+						"1"
 					],
 					"query": [
 						{
@@ -74,7 +74,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"FirstName\": \"TestFirstName 2\",\r\n    \"LastName\": \"TestLastName 2\",\r\n    \"Address\": \"Test address 2\",\r\n    \"GrossIncome\": 80000.00,\r\n    \"WorkPosition\": \"Testing Position 2\"\r\n}",
+					"raw": "{\r\n    \"FirstName\": \"TestFirstName\",\r\n    \"LastName\": \"TestLastName\",\r\n    \"Address\": \"Test address\",\r\n    \"Email\": \"test@email.com\",\r\n    \"GrossIncome\": 80000.00,\r\n    \"WorkPosition\": \"Testing Position\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -101,7 +101,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{apiUrl}}/api/employees/delete/11",
+					"raw": "{{apiUrl}}/api/employees/delete/1",
 					"host": [
 						"{{apiUrl}}"
 					],
@@ -109,7 +109,7 @@
 						"api",
 						"employees",
 						"delete",
-						"11"
+						"1"
 					]
 				}
 			},
@@ -159,7 +159,42 @@
 			"name": "Export to PDF",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/api/employees/export/pdf/1",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"employees",
+						"export",
+						"pdf",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Forward PDF to employee",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/api/employees/export/pdf/1/forward",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"employees",
+						"export",
+						"pdf",
+						"1",
+						"forward"
+					]
+				}
 			},
 			"response": []
 		}

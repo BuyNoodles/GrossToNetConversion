@@ -91,15 +91,36 @@ namespace API.Controllers
         [HttpGet("export/pdf/{id}")]
         public async Task<ActionResult> ExportToPdf(int id)
         {
-            var response = await _employeeRepository.ExportToPdfAsync(id);
+            var employee = await _employeeRepository.GetEmployeeByIdAsync(id, "rsd");
 
-            if (!response) return NotFound(new ApiResponse(404,
+            if (employee == null) return NotFound(new ApiResponse(404,
                 $"Employee with Id {id} not found"));
 
+            _employeeRepository.ExportToPdf(employee);
+
             return PhysicalFile(
-                Path.Combine(Directory.GetCurrentDirectory(), "Content/Files/Employee.pdf"),
+                Path.Combine(Directory.GetCurrentDirectory(), 
+                $"Content/Files/{employee.FirstName}{employee.LastName}_Employee.pdf"),
                 "application/pdf",
-                "Employee.pdf");
+                $"{employee.FirstName}{employee.LastName}_Employee.pdf");
+        }
+
+        [HttpGet("export/pdf/{id}/forward")]
+        public async Task<ActionResult> ForwardPdfToEmployee(int id)
+        {
+            var employee = await _employeeRepository.GetEmployeeByIdAsync(id, "rsd");
+
+            if (employee == null) return NotFound(new ApiResponse(404,
+                $"Employee with Id {id} not found"));
+
+            _employeeRepository.ExportToPdf(employee);
+
+            var response = await _employeeRepository.SendPdfToEmail(employee);
+
+            if (!response) return BadRequest(new ApiResponse(404,
+                $"Something went wrong.."));
+
+            return Ok();
         }
     }
 }

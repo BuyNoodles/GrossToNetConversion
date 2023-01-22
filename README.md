@@ -6,8 +6,9 @@ Postman collection json file is available `GrossToNetConversion.postman_collecti
 
 ## Configuration
 
-Change MSSQL connection string if running in production in `appsettings.json`.
-Make an account on https://apilayer.com/marketplace/exchangerates_data-api and set your API key inside `appsettings.json`
+Change MSSQL connection string if running in production in `appsettings.json`.  
+Make an account on https://apilayer.com/marketplace/exchangerates_data-api and set your API key inside `appsettings.json`.  
+Also make an account on https://sendgrid.com/, confirm email and create new sender email. Set your API key and sender email inside `appsettings.json`.  
 
 ### Local API addresses are:
 
@@ -23,3 +24,4 @@ Make an account on https://apilayer.com/marketplace/exchangerates_data-api and s
 * [GET] Export to xlsx `/api/employees/export/excel`
 * [GET] Export to CSV `/api/employees/export/csv`
 * [GET] Export detailed employee data to PDF `/api/employees/export/pdf/5`
+* [GET] Export and forward PDF file to employee `/api/employees/export/pdf/5/forward`
