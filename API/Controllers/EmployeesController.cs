@@ -29,6 +29,10 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Employee>> GetEmployee(int id, string currency = "rsd")
         {
+            if(currency == null) 
+                return BadRequest(new ApiResponse(400,
+                    "Currency can only be RSD, EUR or USD.."));
+
             currency = currency.ToLower();
 
             if (currency != "rsd" && currency != "eur" & currency != "usd")

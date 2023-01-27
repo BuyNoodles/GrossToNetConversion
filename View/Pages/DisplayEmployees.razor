@@ -1,0 +1,25 @@
+﻿@inherits DisplayEmployeesBase
+
+@foreach (var employee in Employees)
+{
+    <div class="col-md-4 mb-2">
+        <a href="/employees/@(employee.Id)?currency=rsd">
+            <div class="card text-white bg-secondary">
+                <div class="card-body">
+                    <h4 class="card-header mb-2">
+                        @employee.FirstName @employee.LastName
+                    </h4>
+                    <p class="card-text">
+                        Email:<br>@employee.Email
+                    </p>
+                    <p class="card-text">
+                        Work Position:<br>@employee.WorkPosition
+                    </p>
+                    <p class="card-text">
+                        Gross Income:<br>@employee.GrossIncome RSD
+                    </p>
+                </div>
+            </div>
+        </a>
+    </div>
+}

@@ -1,4 +1,4 @@
-﻿namespace API.Dtos
+﻿namespace Models.Dtos
 {
     public class IncomeDetailsDto
     {

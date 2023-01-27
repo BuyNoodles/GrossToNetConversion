@@ -1,0 +1,19 @@
+﻿@inherits DisplayEmployeeDetailsBase
+
+<h2 class="mb-5">Employee Details</h2>
+<div class="row">
+    <div class="col-md-6">
+        <h4>@Employee.FirstName @Employee.LastName</h4>
+        <hr>
+        <p>Email: @Employee.Email</p>
+        <p>Address: @Employee.Address</p>
+        <p>Work Position: @Employee.WorkPosition</p>
+        <h3>Income Details</h3>
+        <p><strong>Gross Income: @Employee.GrossIncome</strong></p>
+        <p>Tax: @Employee.IncomeDetails.Tax</p>
+        <p>PIO: @Employee.IncomeDetails.PIO</p>
+        <p>Health Care: @Employee.IncomeDetails.HealthCare</p>
+        <p>Unemployment: @Employee.IncomeDetails.Unemployment</p>
+        <p><strong>Net Income: @Employee.IncomeDetails.NetIncome</strong></p>
+    </div>
+</div>

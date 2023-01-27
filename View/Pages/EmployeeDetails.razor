@@ -1,0 +1,35 @@
+﻿@page "/employees/{Id:int}"
+@inherits EmployeeDetailsBase
+
+@if(Employee == null && ErrorMessage == null)
+{
+    <DisplaySpinner />
+}
+else if(ErrorMessage != null)
+{
+    <DisplayError ErrorMessage="@ErrorMessage"></DisplayError>
+}
+else
+{
+    <DisplayEmployeeDetails Employee="@Employee"></DisplayEmployeeDetails>
+
+    <a class="btn btn-primary"
+        href="@(HttpClient.BaseAddress)api/employees/export/pdf/@Employee.Id/">Export to PDF</a>
+    <button class="btn btn-success" 
+        disabled="@Notification"
+        @onclick="() => SendPdfToEmployee_Click(Employee.Id)">Send PDF to employee</button>
+    <button class="btn btn-danger"
+        @onclick="() => DeleteEmployee_Click(Employee.Id)">Delete Employee</button>
+    <br /> <hr />
+    <a class="btn btn-primary mt-2"
+        @onclick='() => ConvertCurrency_Click(Employee.Id, "eur")'>Convert to EUR</a>
+    <a class="btn btn-primary mt-2"
+        @onclick='() => ConvertCurrency_Click(Employee.Id, "usd")'>Convert to USD</a>
+}
+
+@if(Notification)
+{
+    <RadzenAlert AllowClose="false" AlertStyle="AlertStyle.Success" Variant="Variant.Flat" Shade="Shade.Lighter">
+        Successfully sent PDF to employee's email..
+    </RadzenAlert>
+}

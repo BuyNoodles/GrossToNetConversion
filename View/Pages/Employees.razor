@@ -1,0 +1,33 @@
+﻿@page "/"
+@inherits EmployeesBase
+
+@if(Employees == null && ErrorMessage == null)
+{
+    <DisplaySpinner />
+}
+else if(ErrorMessage != null)
+{
+    <DisplayError ErrorMessage="@ErrorMessage"></DisplayError>
+}
+else 
+{
+    <h3 class="mb-3">Employees</h3>
+
+    <a class="btn btn-primary"
+       href="@(HttpClient.BaseAddress)api/employees/export/excel">Export to Excel</a>
+    <a class="btn btn-primary"
+        href="@(HttpClient.BaseAddress)api/employees/export/csv">Export to CSV</a>
+    
+        var employeeCount = Employees.Count();
+    
+    @if(employeeCount > 0)
+    {
+        <div class="row mt-3">
+            <DisplayEmployees Employees="@Employees" Currency="RSD"></DisplayEmployees>
+        </div>
+    }
+    else
+    {
+        <h4>No Employees</h4>
+    }
+}

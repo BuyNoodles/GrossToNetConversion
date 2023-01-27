@@ -15,6 +15,10 @@ Also make an account on https://sendgrid.com/, confirm email and create new send
 * http://localhost:5000
 * https://localhost:5001
 
+### Local Blazor client is available at:
+
+* https://localhost:5003
+
 ### API endpoints
 
 * [GET] all employees `/api/employees`

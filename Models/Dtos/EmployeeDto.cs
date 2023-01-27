@@ -1,6 +1,8 @@
-﻿namespace API.Dtos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Models.Dtos
 {
-    public class DetailedEmployeeDto
+    public class EmployeeDto
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -9,6 +11,5 @@
         public string Email { get; set; }
         public decimal GrossIncome { get; set; }
         public string WorkPosition { get; set; }
-        public IncomeDetailsDto IncomeDetails { get; set; }
     }
 }
