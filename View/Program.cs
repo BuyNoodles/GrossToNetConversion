@@ -10,11 +10,15 @@ var services = builder.Services;
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddScoped(sp => new HttpClient { 
+services.AddScoped(sp => new HttpClient { 
     BaseAddress = new Uri("https://localhost:5001")
 });
 
 services.AddScoped<IEmployeeService, EmployeeService>();
+
+services.AddScoped<DialogService>();
 services.AddScoped<NotificationService>();
+services.AddScoped<TooltipService>();
+services.AddScoped<ContextMenuService>();
 
 await builder.Build().RunAsync();

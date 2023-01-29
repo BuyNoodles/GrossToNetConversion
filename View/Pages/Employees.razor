@@ -13,6 +13,21 @@ else
 {
     <h3 class="mb-3">Employees</h3>
 
+    @if(CreateSuccess)
+    {
+        <RadzenAlert AllowClose="false" AlertStyle="AlertStyle.Success" Variant="Variant.Flat" Shade="Shade.Lighter">
+            Successfully Added Employee..
+        </RadzenAlert>
+    }
+    else if(DeleteSuccess)
+    {
+        <RadzenAlert AllowClose="false" AlertStyle="AlertStyle.Success" Variant="Variant.Flat" Shade="Shade.Lighter">
+            Successfully Deleted Employee..
+        </RadzenAlert>
+    }
+
+    <a class="btn btn-success"
+        href="employees/create">Add Employee</a>
     <a class="btn btn-primary"
        href="@(HttpClient.BaseAddress)api/employees/export/excel">Export to Excel</a>
     <a class="btn btn-primary"

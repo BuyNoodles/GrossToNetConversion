@@ -9,11 +9,11 @@
         <p>Address: @Employee.Address</p>
         <p>Work Position: @Employee.WorkPosition</p>
         <h3>Income Details</h3>
-        <p><strong>Gross Income: @Employee.GrossIncome</strong></p>
-        <p>Tax: @Employee.IncomeDetails.Tax</p>
-        <p>PIO: @Employee.IncomeDetails.PIO</p>
-        <p>Health Care: @Employee.IncomeDetails.HealthCare</p>
-        <p>Unemployment: @Employee.IncomeDetails.Unemployment</p>
-        <p><strong>Net Income: @Employee.IncomeDetails.NetIncome</strong></p>
+        <p><strong>Gross Income: @Employee.GrossIncome.ToString("0.00") @Currency</strong></p>
+        <p>Tax: @Employee.IncomeDetails.Tax.ToString("0.00") @Currency</p>
+        <p>PIO: @Employee.IncomeDetails.PIO.ToString("0.00") @Currency</p>
+        <p>Health Care: @Employee.IncomeDetails.HealthCare.ToString("0.00") @Currency</p>
+        <p>Unemployment: @Employee.IncomeDetails.Unemployment.ToString("0.00") @Currency</p>
+        <p><strong>Net Income: @Employee.IncomeDetails.NetIncome.ToString("0.00") @Currency</strong></p>
     </div>
 </div>

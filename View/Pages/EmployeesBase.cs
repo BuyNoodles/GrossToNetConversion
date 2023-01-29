@@ -10,6 +10,12 @@ namespace View.Pages
         public IEmployeeService EmployeeService { get; set; }
         [Inject]
         public HttpClient HttpClient { get; set; }
+        [Parameter]
+        [SupplyParameterFromQuery(Name = "create")]
+        public bool CreateSuccess { get; set; }
+        [Parameter]
+        [SupplyParameterFromQuery(Name = "delete")]
+        public bool DeleteSuccess { get; set; }
         public List<EmployeeDto> Employees { get; set; }
         public string ErrorMessage { get; set; }
 

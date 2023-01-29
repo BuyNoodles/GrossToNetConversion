@@ -7,5 +7,7 @@ namespace View.Pages
     {
         [Parameter]
         public DetailedEmployeeDto Employee { get; set; }
+        [Parameter]
+        public string Currency { get; set; }
     }
 }

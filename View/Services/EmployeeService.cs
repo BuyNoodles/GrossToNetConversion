@@ -1,5 +1,6 @@
 ﻿using Models.Dtos;
 using System.Net.Http.Json;
+using System.Text;
 using View.Interfaces;
 
 namespace View.Services
@@ -15,11 +16,11 @@ namespace View.Services
             _logger = logger;
         }
 
-        public async Task<bool> DeleteEmployee(int id)
+        public async Task<bool> CreateEmployee(EmployeeDto employee)
         {
             try
             {
-                var response = await _httpClient.DeleteAsync($"api/employees/delete/{id}");
+                var response = await _httpClient.PostAsJsonAsync($"api/employees/add", employee);
                 if (response.IsSuccessStatusCode)
                 {
                     return true;
@@ -27,29 +28,7 @@ namespace View.Services
                 else
                 {
                     var message = await response.Content.ReadFromJsonAsync<Error>();
-                    throw new Exception(message.Message);
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-                throw;
-            }
-        }
-
-        public async Task<bool> SendPdfToEmployee(int id)
-        {
-            try
-            {
-                var response = await _httpClient.GetAsync($"api/employees/export/pdf/{id}/forward");
-                if (response.IsSuccessStatusCode)
-                {
-                    return true;
-                }
-                else
-                {
-                    var message = await response.Content.ReadFromJsonAsync<Error>();
-                    throw new Exception(message.Message);
+                    throw new Exception(message.Message + ", all fields must be filled");
                 }
             }
             catch (Exception ex)
@@ -108,7 +87,52 @@ namespace View.Services
                 throw;
             }
         }
+
+        public async Task<bool> SendPdfToEmployee(int id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/employees/export/pdf/{id}/forward");
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    var message = await response.Content.ReadFromJsonAsync<Error>();
+                    throw new Exception(message.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
+        }
+
+        public async Task<bool> DeleteEmployee(int id)
+        {
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"api/employees/delete/{id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    var message = await response.Content.ReadFromJsonAsync<Error>();
+                    throw new Exception(message.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
+        }
     }
+
     public class Error
     {
         public int StatusCode { get; set; }

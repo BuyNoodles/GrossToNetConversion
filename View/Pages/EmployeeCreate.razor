@@ -1,0 +1,66 @@
+﻿@page "/employees/create"
+@inherits EmployeeCreateBase
+
+@if(ErrorMessage != null)
+{
+    <DisplayError ErrorMessage="@ErrorMessage"></DisplayError>
+}
+else
+{
+    <RadzenTemplateForm TItem="EmployeeDto" Data=@Employee Submit="OnSubmit">
+        <div class="d-flex justify-content-left">
+            <div class="d-flex flex-column">
+            <h4 class="d-flex justify-content-center">Create new employee</h4>
+                <div class="form-control">
+                    <div class="form-label">
+                        <RadzenLabel Component="FirstName" Text="First name" />
+                    </div>
+                    <p>
+                        <RadzenTextBox Name="FirstName" @bind-Value=@Employee.FirstName AutoComplete="false" />
+                        <RadzenRequiredValidator Component="FirstName" Text="First name is required!" Style="display:block" />
+                    </p>
+                    <div class="form-label">
+                        <RadzenLabel Component="LastName" Text="Last name" />
+                    </div>
+                    <p>
+                        <RadzenTextBox Name="LastName" @bind-Value=@Employee.LastName AutoComplete="false" />
+                        <RadzenRequiredValidator Component="LastName" Text="Last name is required!" Style="display:block" />
+                    </p>
+                    <div class="form-label">
+                        <RadzenLabel Component="Email" Text="Email" />
+                    </div>
+                    <p>
+                        <RadzenTextBox Name="Email" @bind-Value=@Employee.Email AutoComplete="false" />
+                        <RadzenRequiredValidator Component="Email" Text="Email is required!" />
+                        <RadzenEmailValidator Component="Email" Text="Email is required!" Popup="false" Style="display:block"  />
+                    </p>
+        
+                    <div class="form-label">
+                        <RadzenLabel Component="Address" Text="Address" />
+                    </div>
+                    <p>
+                        <RadzenTextBox Name="Address" @bind-Value=@Employee.Address AutoComplete="false" />
+                        <RadzenRequiredValidator Component="Address" Text="Address is required!" Style="display:block" />
+                    </p>
+                    <div class="form-label">
+                        <RadzenLabel Component="WorkPosition" Text="Work Position" />
+                    </div>
+                    <p>
+                        <RadzenTextBox Name="WorkPosition" @bind-Value=@Employee.WorkPosition AutoComplete="false" />
+                        <RadzenRequiredValidator Component="WorkPosition" Text="Work Position is required!" Style="display:block" />
+                    </p>
+                    <div class="form-label">
+                        <RadzenLabel Component="GrossIncome" Text="GrossIncome" />
+                    </div>
+                    <p>
+                        <RadzenNumeric Name="GrossIncome" ShowUpDown="false" TValue="decimal" @bind-Value=@Employee.GrossIncome
+                            Placeholder="Enter or clear value" AutoComplete="false" />
+                        <RadzenRequiredValidator Component="GrossIncome" Text="Gross income is required!" Style="display:block" />
+                    </p>
+                    <RadzenButton ButtonType="ButtonType.Submit" Text="Save" class="w-100"/>
+                </div>
+            </div>
+        </div>
+    </RadzenTemplateForm>
+}
+

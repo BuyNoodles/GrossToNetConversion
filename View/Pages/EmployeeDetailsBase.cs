@@ -52,7 +52,7 @@ namespace View.Pages
             try
             {
                 await EmployeeService.DeleteEmployee(id);
-                NavigationManager.NavigateTo("/");
+                NavigationManager.NavigateTo("/?delete=true");
             }
             catch (Exception)
             {

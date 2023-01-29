@@ -11,7 +11,7 @@ else if(ErrorMessage != null)
 }
 else
 {
-    <DisplayEmployeeDetails Employee="@Employee"></DisplayEmployeeDetails>
+    <DisplayEmployeeDetails Employee="@Employee" Currency="@Currency.ToUpper()"></DisplayEmployeeDetails>
 
     <a class="btn btn-primary"
         href="@(HttpClient.BaseAddress)api/employees/export/pdf/@Employee.Id/">Export to PDF</a>
@@ -20,7 +20,9 @@ else
         @onclick="() => SendPdfToEmployee_Click(Employee.Id)">Send PDF to employee</button>
     <button class="btn btn-danger"
         @onclick="() => DeleteEmployee_Click(Employee.Id)">Delete Employee</button>
+
     <br /> <hr />
+
     <a class="btn btn-primary mt-2"
         @onclick='() => ConvertCurrency_Click(Employee.Id, "eur")'>Convert to EUR</a>
     <a class="btn btn-primary mt-2"

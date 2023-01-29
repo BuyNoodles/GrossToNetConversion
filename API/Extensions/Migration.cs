@@ -15,7 +15,7 @@ namespace API.Extensions
                 {
                     var context = services.GetRequiredService<GrossToNetContext>();
                     await context.Database.MigrateAsync();
-                    await GrossToNetContextSeed.SeedAsync(context, loggerFactory);
+                    // await GrossToNetContextSeed.SeedAsync(context, loggerFactory);
                 }
                 catch (Exception ex)
                 {
